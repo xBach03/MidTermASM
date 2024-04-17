@@ -1,13 +1,11 @@
-.Model	Small
-.Stack	100
-.Data
-	CRLF	DB	13,10,’$’
-	MSG	    DB	‘Hello! $’
+.Model	Tiny
 .Code
+	ORG	100H
+START: JMP CONTINUE
+	CRLF	DB	13,10,’$’
+	MSG	DB	‘Hello! $’
+CONTINUE:
 MAIN	Proc
-	;khới đầu cho DS
-	MOV	AX, @data
-	MOV	DS, AX
 	;về đầu dòng mới dùng hàm 9 của INT 21H
 	MOV	AH,9
 	LEA	DX, CRLF
@@ -20,8 +18,7 @@ MAIN	Proc
 	MOV	AH,9
 	LEA	DX, CRLF
 	INT	21H
-	;trở về DOS dùng hàm 4CH của INT 21H
-	MOV	AH, 4CH
-	INT	21H
+	;trở về DOS 
+	INT	20H
 MAIN	Endp
-	END MAIN
+	END START
